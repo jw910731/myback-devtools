@@ -1,0 +1,33 @@
+{
+  "name": "myback-sdk",
+  "version": "0.1.0",
+  "description": "Software Development Kit for Myback module.",
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Feline-Studio/myback-devtools.git"
+  },
+  "keywords": [
+    "Myback",
+    "sdk",
+    "module"
+  ],
+  "author": "Feline Studio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Feline-Studio/myback-devtools/issues"
+  },
+  "homepage": "https://github.com/Feline-Studio/myback-devtools#readme",
+  "devDependencies": {
+    "@babel/core": "^7.17.9",
+    "@babel/preset-env": "^7.16.11",
+    "babel-jest": "^27.5.1",
+    "jest": "^27.4.7"
+  },
+  "dependencies": {
+    "axios": "^0.25.0"
+  }
+}
