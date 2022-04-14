@@ -1,6 +1,5 @@
 import SDKInterface from './interface';
 import ResourceModel from './models/resource';
-import CollectionModel from './models/collection';
 
 export default class SDK extends SDKInterface {
 
@@ -18,7 +17,8 @@ export default class SDK extends SDKInterface {
 	 * 
 	 * @returns {ResourceModel[]}
 	 */
-	getResources() {
-		return this.request(SDKInterface.HTTP_GET, '/resource/');
+	async getResources() {
+		const res = await this.request(SDKInterface.HTTP_GET, '/resource/');
+		return res.data.map( ({id}) => new ResourceModel(this.apiKey, id) );
 	}
 }

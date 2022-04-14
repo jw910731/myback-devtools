@@ -3,7 +3,7 @@ import SDK from '../src/index';
 
 jest.mock('axios');
 
-test('list sdk resources', () => {
+test('list sdk resources', async () => {
   const sdk = new SDK('API_KEY');
   const sampleResources = [
     {
@@ -17,5 +17,8 @@ test('list sdk resources', () => {
   ];
   const resp = { data: sampleResources };
   axios.get.mockResolvedValue(resp);
-  return sdk.getResources().then( ( {data} ) => expect(data).toEqual(sampleResources));
+  const resources = await sdk.getResources();
+  for( let i = 0 ; i < 2 ; i++ ) {
+    expect(resources[i].resourceId).toEqual(sampleResources[i].id); 
+  }
 });
