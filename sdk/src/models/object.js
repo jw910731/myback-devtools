@@ -14,6 +14,7 @@ export default class ObjectModel extends SDKInterface {
 		super(apiKey);
 		this.resourceId = resourceId;
 		this.collectionId = collectionId;
+		this._old_properties = properties;
 		this.properties = properties;
 	}
 
@@ -39,14 +40,35 @@ export default class ObjectModel extends SDKInterface {
 	/** 
 	 * Save the object to the database.
 	 */
-	save() {
-
+	async save() {
+		const { apiKey, resourceId, collectionId, _old_properties, properties } = this;
+		let uri = `/resource/${resourceId}`;
+		uri += `/collection/${collectionId}`;
+		uri += `/object?match=${JSON.stringify(_old_properties)}`;
+		const res = await this.request(SDKInterface.HTTP_PUT, uri, { "data" : properties });
+		return new ObjectModel(apiKey, resourceId, collectionId, res.data);
 	}
 
 	/** 
 	 * Delete the object from the database.
 	 */
-	destroy() {
+	async destroy() {
+		const { apiKey, resourceId, collectionId, _old_properties } = this;
+		let uri = `/resource/${resourceId}`;
+		uri += `/collection/${collectionId}`;
+		uri += `/object?match=${JSON.stringify(_old_properties)}`;
+		const res = await this.request(SDKInterface.HTTP_DELETE, uri);
+		delete this.properties;
 
+		return null;
 	}
+
+	/**
+	 * Return the relation to the specific collection.
+	 * @param {string} collectionId
+	 * @return {object}
+	 */
+	 getRelation(collectionId) {
+	 	
+	 }
 }

@@ -34,7 +34,6 @@ export default class SDKInterface {
 				return axios.post(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`, requestBody);
 			case SDKInterface.HTTP_PUT:
 				return axios.put(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`, requestBody);
-				break;
 			case SDKInterface.HTTP_DELETE:
 				return axios.delete(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`);
 				break;

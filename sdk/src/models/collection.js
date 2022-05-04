@@ -23,26 +23,46 @@ export default class CollectionModel extends SDKInterface {
 	 * @param {number} limit must be an integer. 
 	 * @returns {ObjectModel[]}
 	 */
-	getPage(pageId = 0, limit = 24) {
-
+	async getPage(pageId = 0, limit = 24) {
+		const { apiKey, resourceId, collectionId } = this;
+		let uri = `/resource/${resourceId}`;
+		uri += `/collection/${collectionId}`;
+		uri += `/object?limit=${limit}&offset=${pageId}`;
+		const res = await this.request(SDKInterface.HTTP_GET, uri);
+		return res.map( ({ data : properties }) => new ObjectModel(apiKey, resourceId, collectionId, properties) );
 	}
 
 	/**
 	 * Return the newly created object.
 	 * 
-	 * @param {properties} object the properties for the new object. 
+	 * @param {object} properties object the properties for the new object. 
 	 * @returns {ObjectModel}
 	 */
-	 createObject(properties) {
-	 	
+	async createObject(properties) {
+		const { apiKey, resourceId, collectionId } = this;
+		let uri = `/resource/${resourceId}`;
+		uri += `/collection/${collectionId}`;
+		uri += `/object`;
+		const res = await this.request(SDKInterface.HTTP_POST, uri, { "data" : properties });
+		return new ObjectModel(apiKey, resourceId, collectionId, res.data);
 	 }
 
-	/**
-	 * Return the query builder for the collection.
-	 * 
-	 * @returns {QueryBuilder}
-	 */
-	getQueryBuilder() {
 
-	}
-}
+	/**
+	 * Return the result by the given query.
+	 * 
+	 * @param {QueryBuilder} querybuilder query to filter the output.
+	 * @param {number} pageId must be an integer. 
+	 * @param {number} limit must be an integer. 
+	 * @returns {ObjectModel[]}
+	 */
+	async query(querybuilder, pageId = 0, query = 24) {
+		const { apiKey, resourceId, collectionId } = this;
+		let uri = `/resource/${resourceId}`;
+		uri += `/collection/${collectionId}`;
+		url += `/object?limit=${limit}&offset=${pageId}&matcher=${querybuilder.toString()}`;
+		const res = await this.request(SDKInterface.HTTP_GET);
+		return res.data.map( ({ data : properties }) => new ObjectModel(apiKey, resourceId, collectionId, properties) );
+	 }
+ }
+ 
