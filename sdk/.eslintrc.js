@@ -1,0 +1,34 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+  },
+  plugins: [
+    'react',
+    'jest',
+  ],
+  rules: {
+  },
+  overrides: [
+    {
+      files: [
+        '**/*.test.js',
+        '**/*.test.jsx',
+      ],
+      env: {
+        jest: true,
+      },
+    },
+  ],
+};

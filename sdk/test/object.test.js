@@ -5,8 +5,8 @@ jest.mock('axios');
 
 test('object get and set', () => {
   const object = new ObjectModel('API_KEY', 1, 'COLLECTION_ID', {
-    'field1' : 1,
-    'field2' : 'somevar'
+    field1: 1,
+    field2: 'somevar',
   });
   expect(object.get('field1')).toEqual(1);
   expect(object.get('field2')).toEqual('somevar');
@@ -16,8 +16,8 @@ test('object get and set', () => {
 
 test('object save', async () => {
   const object = new ObjectModel('API_KEY', 1, 'COLLECTION_ID', {
-    'field1' : 1,
-    'field2' : 'somevar'
+    field1: 1,
+    field2: 'somevar',
   });
   object.set('field1', 2);
 
@@ -28,11 +28,10 @@ test('object save', async () => {
   expect(object.properties).toEqual(newObj.properties);
 });
 
-
 test('object destroy', async () => {
   const object = new ObjectModel('API_KEY', 1, 'COLLECTION_ID', {
-    'field1' : 1,
-    'field2' : 'somevar'
+    field1: 1,
+    field2: 'somevar',
   });
 
   axios.delete.mockResolvedValue({});
