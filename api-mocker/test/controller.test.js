@@ -6,7 +6,7 @@ test('get resources', async () => {
   await Controller.getResources({}, res);
   const resources = res.get();
   expect(resources.length).toBe(1);
-  expect(resources[0].name).toBe('example');
+  expect(resources[0].name).toBe('example.db');
 });
 
 test('get collections', async () => {
@@ -29,41 +29,43 @@ test('get pages', async () => {
 test('create object', async () => {
   const req = {
     url: 'api/v1/resource/1/collection/one/object',
-    body: { field1: 1, 2: 'somestr' },
+    body: { field1: 1, field2: 'somestr' },
   };
   const res = new MockResponse();
   await Controller.createObject(req, res);
   const record = res.get().data;
   expect(record.field1).toBe(req.body.field1);
-  expect(record['2']).toBe(req.body['2']);
+  expect(record.field2).toBe(req.body.field2);
 });
 
-// API said single??
-// test('query object', async () => {
-// const req = {
-//   url : 'resource/1/collection/one',
-//   body: { 'field1' : 1 }
-// };
-// const res = new MockResponse();
-// await Controller.queryObject(req, res);
-// });
+test('query object', async () => {
+  const req = {
+    url: 'api/v1/resource/1/collection/one/object/query?matcher={"field1":1}',
+  };
+  const res = new MockResponse();
+  await Controller.queryObject(req, res);
+  const records = res.get();
+  records.forEach((record) => {
+    expect(record.data.field1).toBe(1);
+  });
+});
 
 test('update object', async () => {
-  const newObj = { field1: 100, 2: 'a' };
+  const newObj = { field1: 100, field2: 'a' };
   const req = {
-    url: 'api/v1/resource/1/collection/one/object?matcher={"field1":1,"2":"somestr"}',
+    url: 'api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
     body: { data: newObj },
   };
   const res = new MockResponse();
   await Controller.updateObject(req, res);
   const record = res.get().data;
   expect(record.field1).toBe(newObj.field1);
-  expect(record['2']).toBe(newObj['2']);
+  expect(record.field2).toBe(newObj.field2);
 });
 
 test('delete object', async () => {
   const req = {
-    url: 'api/v1/resource/1/collection/one/object?matcher={"field1":1,"2":"somestr"}',
+    url: 'api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
   };
   const res = new MockResponse();
   await Controller.deleteObject(req, res);

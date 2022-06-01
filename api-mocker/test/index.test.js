@@ -16,7 +16,7 @@ test('server routing - resource index', async () => {
   }, res);
   const resources = res.get();
   expect(resources.length).toBe(1);
-  expect(resources[0].name).toBe('example');
+  expect(resources[0].name).toBe('example.db');
 });
 
 test('server routing - collection index', async () => {
@@ -45,29 +45,29 @@ test('server routing - create object', async () => {
   await APIMocker.fakeServer({
     url: '/api/v1/resource/1/collection/one/object',
     method: 'POST',
-    body: { field1: 1, 2: 'somestr' },
+    body: { field1: 1, field2: 'somestr' },
   }, res);
   const record = res.get().data;
   expect(record.field1).toBe(1);
-  expect(record['2']).toBe('somestr');
+  expect(record.field2).toBe('somestr');
 });
 
 test('server routing - update object', async () => {
   const res = new MockResponse();
   await APIMocker.fakeServer({
-    url: '/api/v1/resource/1/collection/one/object?matcher={"field1":1,"2":"somestr"}',
+    url: '/api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
     method: 'PUT',
-    body: { data: { field1: 100, 2: 'a' } },
+    body: { data: { field1: 100, field2: 'a' } },
   }, res);
   const record = res.get().data;
   expect(record.field1).toBe(100);
-  expect(record['2']).toBe('a');
+  expect(record.field2).toBe('a');
 });
 
 test('server routing - delete object', async () => {
   const res = new MockResponse();
   await APIMocker.fakeServer({
-    url: '/api/v1/resource/1/collection/one/object?matcher={"field1":1,"2":"somestr"}',
+    url: '/api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
     method: 'DELETE',
   }, res);
 });
