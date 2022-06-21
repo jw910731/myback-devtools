@@ -4,7 +4,7 @@ import SDK from '../src/index';
 jest.mock('axios');
 
 test('list sdk resources', async () => {
-  const sdk = new SDK('API_KEY');
+  const sdk = new SDK();
   const sampleResources = [
     {
       id: 1,

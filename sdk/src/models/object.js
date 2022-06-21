@@ -4,13 +4,12 @@ export default class ObjectModel extends SDKInterface {
   /**
    * Constructor of the controller of resource.
    *
-   * @param {string} apiKey
    * @param {number} resourceId must be an integer.
    * @param {string} collectionId
    * @param {object} properties
    */
-  constructor(apiKey, resourceId, collectionId, properties) {
-    super(apiKey);
+  constructor(resourceId, collectionId, properties) {
+    super();
     this.resourceId = resourceId;
     this.collectionId = collectionId;
     this.oldProperties = properties;
@@ -41,13 +40,13 @@ export default class ObjectModel extends SDKInterface {
    */
   async save() {
     const {
-      apiKey, resourceId, collectionId, oldProperties, properties,
+      resourceId, collectionId, oldProperties, properties,
     } = this;
     let uri = `/resource/${resourceId}`;
     uri += `/collection/${collectionId}`;
     uri += `/object?match=${JSON.stringify(oldProperties)}`;
     const res = await this.request(SDKInterface.HTTP_PUT, uri, { data: properties });
-    return new ObjectModel(apiKey, resourceId, collectionId, res.data);
+    return new ObjectModel(resourceId, collectionId, res.data);
   }
 
   /**

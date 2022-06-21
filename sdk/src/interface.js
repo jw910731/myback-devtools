@@ -12,12 +12,11 @@ export default class SDKInterface {
   /**
    * Constructor of interface.
    *
-   * @param {string} apiKey the authorized api key.
-   * @param {string} endPoint the server endPoint.
+   * @param {string} sdkVersion the version of the api end point.
    */
-  constructor(apiKey, endPoint = '', sdkVersion = 'v1') {
-    this.apiKey = apiKey;
-    this.endPoint = endPoint;
+  constructor(sdkVersion = 'v1') {
+    this.apiKey = window.MYBACK_API_KEY;
+    this.endPoint = window.MYBACK_API_ENDPOINT;
     this.sdkVersion = sdkVersion;
   }
 

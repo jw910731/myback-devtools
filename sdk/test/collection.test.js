@@ -11,7 +11,7 @@ test('object creation', async () => {
   const resp = { data: sampleObject };
   axios.post.mockResolvedValue(resp);
 
-  const sampleCollection = new CollectionModel('API_KEY', 1, 'COLLECTION_ID');
+  const sampleCollection = new CollectionModel(1, 'COLLECTION_ID');
   const res = await sampleCollection.createObject(sampleObject);
   expect(res.properties).toEqual(sampleObject);
 });
@@ -33,7 +33,7 @@ test('object index', async () => {
   ];
   axios.get.mockResolvedValue(samplePage);
 
-  const sampleCollection = new CollectionModel('API_KEY', 1, 'COLLECTION_ID');
+  const sampleCollection = new CollectionModel(1, 'COLLECTION_ID');
   const res = await sampleCollection.getPage();
   for (let i = 0; i < 2; i += 1) {
     expect(res[i].properties).toEqual(samplePage[i].data);

@@ -5,11 +5,10 @@ export default class ResourceModel extends SDKInterface {
   /**
    * Constructor of the controller of resource.
    *
-   * @param {string} apiKey
    * @param {number} resourceId must be an integer.
    */
-  constructor(apiKey, resourceId) {
-    super(apiKey);
+  constructor(resourceId) {
+    super();
     this.resourceId = resourceId;
   }
 
@@ -19,8 +18,8 @@ export default class ResourceModel extends SDKInterface {
    * @returns {CollectionModel[]}
    */
   async getCollections() {
-    const { apiKey, resourceId } = this;
+    const { resourceId } = this;
     const res = await this.request(SDKInterface.HTTP_GET, `/resource/${resourceId}`);
-    return res.map(({ id }) => new CollectionModel(apiKey, resourceId, id));
+    return res.map(({ id }) => new CollectionModel(resourceId, id));
   }
 }

@@ -14,7 +14,7 @@ test('resource get collections', async () => {
   ];
   axios.get.mockResolvedValue(sampleCollections);
 
-  const sampleResource = new ResourceModel('API_KEY', 1);
+  const sampleResource = new ResourceModel(1);
   const res = await sampleResource.getCollections();
   for (let i = 0; i < 2; i += 1) {
     expect(res[i].id).toEqual(sampleCollections[i].collectionId);

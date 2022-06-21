@@ -1,7 +1,7 @@
 import SDKInterface from './interface';
 import ResourceModel from './models/resource';
 
-export default class SDK extends SDKInterface {
+export class SDK extends SDKInterface {
   /**
    * Return the array of resource models.
    *
@@ -9,6 +9,8 @@ export default class SDK extends SDKInterface {
    */
   async getResources() {
     const res = await this.request(SDKInterface.HTTP_GET, '/resource/');
-    return res.data.map(({ id }) => new ResourceModel(this.apiKey, id));
+    return res.data.map(({ id }) => new ResourceModel(id));
   }
 }
+
+export default SDK;

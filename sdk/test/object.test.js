@@ -4,7 +4,7 @@ import ObjectModel from '../src/models/object';
 jest.mock('axios');
 
 test('object get and set', () => {
-  const object = new ObjectModel('API_KEY', 1, 'COLLECTION_ID', {
+  const object = new ObjectModel(1, 'COLLECTION_ID', {
     field1: 1,
     field2: 'somevar',
   });
@@ -15,7 +15,7 @@ test('object get and set', () => {
 });
 
 test('object save', async () => {
-  const object = new ObjectModel('API_KEY', 1, 'COLLECTION_ID', {
+  const object = new ObjectModel(1, 'COLLECTION_ID', {
     field1: 1,
     field2: 'somevar',
   });
@@ -29,7 +29,7 @@ test('object save', async () => {
 });
 
 test('object destroy', async () => {
-  const object = new ObjectModel('API_KEY', 1, 'COLLECTION_ID', {
+  const object = new ObjectModel(1, 'COLLECTION_ID', {
     field1: 1,
     field2: 'somevar',
   });

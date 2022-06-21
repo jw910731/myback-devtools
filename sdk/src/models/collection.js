@@ -5,12 +5,11 @@ export default class CollectionModel extends SDKInterface {
   /**
    * Constructor of the controller of resource.
    *
-   * @param {string} apiKey
    * @param {number} resourceId must be an integer.
    * @param {string} collectionId
    */
-  constructor(apiKey, resourceId, collectionId) {
-    super(apiKey);
+  constructor(resourceId, collectionId) {
+    super();
     this.resourceId = resourceId;
     this.collectionId = collectionId;
   }
@@ -23,12 +22,12 @@ export default class CollectionModel extends SDKInterface {
    * @returns {ObjectModel[]}
  */
   async getPage(pageId = 0, limit = 24) {
-    const { apiKey, resourceId, collectionId } = this;
+    const { resourceId, collectionId } = this;
     let uri = `/resource/${resourceId}`;
     uri += `/collection/${collectionId}`;
     uri += `/object?limit=${limit}&offset=${pageId}`;
     const res = await this.request(SDKInterface.HTTP_GET, uri);
-    return res.map(({ data: properties }) => new ObjectModel(apiKey, resourceId, collectionId, properties));
+    return res.map(({ data: properties }) => new ObjectModel(resourceId, collectionId, properties));
   }
 
   /**
@@ -38,12 +37,12 @@ export default class CollectionModel extends SDKInterface {
    * @returns {ObjectModel}
    */
   async createObject(properties) {
-    const { apiKey, resourceId, collectionId } = this;
+    const { resourceId, collectionId } = this;
     let uri = `/resource/${resourceId}`;
     uri += `/collection/${collectionId}`;
     uri += '/object';
     const res = await this.request(SDKInterface.HTTP_POST, uri, { data: properties });
-    return new ObjectModel(apiKey, resourceId, collectionId, res.data);
+    return new ObjectModel(resourceId, collectionId, res.data);
   }
 
   /**
@@ -55,11 +54,11 @@ export default class CollectionModel extends SDKInterface {
    * @returns {ObjectModel[]}
    */
   async query(querybuilder, pageId = 0, limit = 24) {
-    const { apiKey, resourceId, collectionId } = this;
+    const { resourceId, collectionId } = this;
     let uri = `/resource/${resourceId}`;
     uri += `/collection/${collectionId}`;
     uri += `/object?limit=${limit}&offset=${pageId}&matcher=${querybuilder.toString()}`;
-    const res = await this.request(SDKInterface.HTTP_GET);
-    return res.data.map(({ data: properties }) => new ObjectModel(apiKey, resourceId, collectionId, properties));
+    const res = await this.request(SDKInterface.HTTP_GET, uri);
+    return res.data.map(({ data: properties }) => new ObjectModel(resourceId, collectionId, properties));
   }
 }
