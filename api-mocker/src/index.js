@@ -1,12 +1,8 @@
-import { URL } from 'url';
 import Controller from './controller';
 
 async function fakeServer(req, res) {
   const { url, method } = req;
-  const reqUrl = new URL(url, 'http://localhost:8080/');
-  const segments = reqUrl.pathname.split('/').filter((s) => s);
-
-  const path = segments.slice(2).join('/');
+  const path = url.split('?')[0].split('/').filter((s) => s).join('/');
   switch (true) {
     case (path === 'resource' && method === 'GET'):
       return Controller.getResources(req, res);
@@ -42,7 +38,7 @@ function mock(middlewares) {
   });
 }
 
-export default {
+export {
   mock,
   fakeServer,
 };

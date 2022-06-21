@@ -1,17 +1,17 @@
-import APIMocker from '../src/index';
+import { mock, fakeServer } from '../src/index';
 import MockResponse from './mock-response';
 
 test('mocking', () => {
   const middlewares = [];
-  APIMocker.mock(middlewares);
+  mock(middlewares);
   expect(middlewares[0].name).toBe('api-mock-server');
   expect(middlewares[0].path).toBe('/api/v1');
 });
 
 test('server routing - resource index', async () => {
   const res = new MockResponse();
-  await APIMocker.fakeServer({
-    url: '/api/v1/resource/',
+  await fakeServer({
+    url: 'resource/',
     method: 'GET',
   }, res);
   const resources = res.get();
@@ -21,8 +21,8 @@ test('server routing - resource index', async () => {
 
 test('server routing - collection index', async () => {
   const res = new MockResponse();
-  await APIMocker.fakeServer({
-    url: '/api/v1/resource/1',
+  await fakeServer({
+    url: 'resource/1',
     method: 'GET',
   }, res);
   const collection = res.get();
@@ -32,8 +32,8 @@ test('server routing - collection index', async () => {
 
 test('server routing - get object page', async () => {
   const res = new MockResponse();
-  await APIMocker.fakeServer({
-    url: '/api/v1/resource/1/collection/one/object',
+  await fakeServer({
+    url: 'resource/1/collection/one/object',
     method: 'GET',
   }, res);
   const object = res.get();
@@ -42,8 +42,8 @@ test('server routing - get object page', async () => {
 
 test('server routing - create object', async () => {
   const res = new MockResponse();
-  await APIMocker.fakeServer({
-    url: '/api/v1/resource/1/collection/one/object',
+  await fakeServer({
+    url: 'resource/1/collection/one/object',
     method: 'POST',
     body: { field1: 1, field2: 'somestr' },
   }, res);
@@ -54,8 +54,8 @@ test('server routing - create object', async () => {
 
 test('server routing - update object', async () => {
   const res = new MockResponse();
-  await APIMocker.fakeServer({
-    url: '/api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
+  await fakeServer({
+    url: 'resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
     method: 'PUT',
     body: { data: { field1: 100, field2: 'a' } },
   }, res);
@@ -66,8 +66,8 @@ test('server routing - update object', async () => {
 
 test('server routing - delete object', async () => {
   const res = new MockResponse();
-  await APIMocker.fakeServer({
-    url: '/api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
+  await fakeServer({
+    url: 'resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
     method: 'DELETE',
   }, res);
 });

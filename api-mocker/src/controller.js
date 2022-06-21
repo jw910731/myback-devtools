@@ -1,29 +1,21 @@
 import fs from 'fs';
-import { dirname } from 'path';
 import { URL } from 'url';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 
-const host = 'http://localhost:8080/';
-
 function parseReq(req) {
-  const url = new URL(req.url, host);
-  const segments = url.pathname.split('/');
+  const url = new URL(req.url, 'http://localhost/');
+  const segments = req.url.split('/').filter((s) => s);
   return {
     url,
-    resourceId: segments[4],
-    collectionId: segments[6],
-    objectId: segments[8],
+    resourceId: segments[1],
+    collectionId: segments[3],
+    objectId: segments[5],
   };
 }
 
-function getFullPath(path) {
-  const appDir = dirname(require.main.filename);
-  return appDir + path;
-}
-
 function listDataDir(path = '') {
-  return fs.readdirSync(getFullPath(`/data/${path}`));
+  return fs.readdirSync(`./data/${path}`);
 }
 
 async function getDB(req) {
@@ -31,7 +23,7 @@ async function getDB(req) {
   const resource = listDataDir()[resourceId - 1];
 
   const db = await open({
-    filename: getFullPath(`/data/${resource}`),
+    filename: `./data/${resource}`,
     driver: sqlite3.Database,
   });
   return db;

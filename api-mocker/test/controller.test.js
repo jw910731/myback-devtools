@@ -10,7 +10,7 @@ test('get resources', async () => {
 });
 
 test('get collections', async () => {
-  const req = { url: 'api/v1/resource/1' };
+  const req = { url: 'resource/1' };
   const res = new MockResponse();
   await Controller.getCollections(req, res);
   const collection = res.get();
@@ -19,7 +19,7 @@ test('get collections', async () => {
 });
 
 test('get pages', async () => {
-  const req = { url: 'api/v1/resource/1/collection/one/object' };
+  const req = { url: 'resource/1/collection/one/object' };
   const res = new MockResponse();
   await Controller.getPage(req, res);
   const object = res.get();
@@ -28,7 +28,7 @@ test('get pages', async () => {
 
 test('create object', async () => {
   const req = {
-    url: 'api/v1/resource/1/collection/one/object',
+    url: 'resource/1/collection/one/object',
     body: { field1: 1, field2: 'somestr' },
   };
   const res = new MockResponse();
@@ -40,7 +40,7 @@ test('create object', async () => {
 
 test('query object', async () => {
   const req = {
-    url: 'api/v1/resource/1/collection/one/object/query?matcher={"field1":1}',
+    url: 'resource/1/collection/one/object/query?matcher={"field1":1}',
   };
   const res = new MockResponse();
   await Controller.queryObject(req, res);
@@ -53,7 +53,7 @@ test('query object', async () => {
 test('update object', async () => {
   const newObj = { field1: 100, field2: 'a' };
   const req = {
-    url: 'api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
+    url: 'resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
     body: { data: newObj },
   };
   const res = new MockResponse();
@@ -65,7 +65,7 @@ test('update object', async () => {
 
 test('delete object', async () => {
   const req = {
-    url: 'api/v1/resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
+    url: 'resource/1/collection/one/object?matcher={"field1":1,"field2":"somestr"}',
   };
   const res = new MockResponse();
   await Controller.deleteObject(req, res);

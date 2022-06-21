@@ -2,7 +2,7 @@
   "name": "api-mocker",
   "version": "1.0.0",
   "description": "Mock fake API for MyBack module development.",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
     "test": "jest --runInBand --collect-coverage"
