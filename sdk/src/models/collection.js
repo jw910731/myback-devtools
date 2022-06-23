@@ -38,7 +38,7 @@ export default class CollectionModel extends SDKInterface {
    */
   async createObject(properties) {
     const { resourceId, collectionId } = this;
-    let uri = `/resource/${resourceId}`;
+    let uri = `resource/${resourceId}`;
     uri += `/collection/${collectionId}`;
     uri += '/object';
     const res = await this.request(SDKInterface.HTTP_POST, uri, { data: properties });
@@ -55,7 +55,7 @@ export default class CollectionModel extends SDKInterface {
    */
   async query(querybuilder, pageId = 0, limit = 24) {
     const { resourceId, collectionId } = this;
-    let uri = `/resource/${resourceId}`;
+    let uri = `resource/${resourceId}`;
     uri += `/collection/${collectionId}`;
     uri += `/object?limit=${limit}&offset=${pageId}&matcher=${querybuilder.toString()}`;
     const res = await this.request(SDKInterface.HTTP_GET, uri);

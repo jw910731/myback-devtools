@@ -12,7 +12,7 @@
     "globals": {
       "window": {
          "MYBACK_API_KEY": "DEVELOPMENT_API_KEY",
-         "MYBACK_API_ENDPOINT": "http://localhost:8080/"
+         "MYBACK_API_ENDPOINT": "http://localhost:8080/api"
        }
     }
   },

@@ -30,13 +30,13 @@ export default class SDKInterface {
   request(method, path, requestBody = {}) {
     switch (method) {
       case SDKInterface.HTTP_GET:
-        return axios.get(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`);
+        return axios.get(`${this.endPoint}/${this.sdkVersion}/${path}`);
       case SDKInterface.HTTP_POST:
-        return axios.post(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`, requestBody);
+        return axios.post(`${this.endPoint}/${this.sdkVersion}/${path}`, requestBody);
       case SDKInterface.HTTP_PUT:
-        return axios.put(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`, requestBody);
+        return axios.put(`${this.endPoint}/${this.sdkVersion}/${path}`, requestBody);
       case SDKInterface.HTTP_DELETE:
-        return axios.delete(`${this.endPoint}/${this.apiKey}/${this.sdkVersion}/${path}`);
+        return axios.delete(`${this.endPoint}/${this.sdkVersion}/${path}`);
       default:
         throw `${method} is not one of the supported method code.`;
     }
