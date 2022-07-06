@@ -1,5 +1,11 @@
 import SDKInterface from '../interface';
 
+/**
+ * Object model represent a backend row (record).
+ * Can use save method to sync attribute to backend and delete to delete it from backend.
+ *
+ * @extends SDKInterface
+ */
 export default class ObjectModel extends SDKInterface {
   /**
    * Constructor of the controller of resource.

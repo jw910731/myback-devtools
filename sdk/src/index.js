@@ -1,6 +1,11 @@
 import SDKInterface from './interface';
 import ResourceModel from './models/resource';
 
+/**
+ * Use for getting all available resource model.
+ *
+ * @extends SDKInterface
+ */
 export class SDK extends SDKInterface {
   /**
    * Return the array of resource models.

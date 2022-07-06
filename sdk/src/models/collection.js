@@ -1,6 +1,12 @@
 import SDKInterface from '../interface';
 import ObjectModel from './object';
 
+/**
+ * Collection model represent a table/collection in backend.
+ * Can use for creating {@link ObjectModel}.
+ *
+ * @extends SDKInterface
+ */
 export default class CollectionModel extends SDKInterface {
   /**
    * Constructor of the controller of resource.

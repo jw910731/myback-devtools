@@ -1,6 +1,11 @@
 import SDKInterface from '../interface';
 import CollectionModel from './collection';
 
+/**
+ * Represent a database in backend. Use for retrieve {@link CollectionModel}
+ *
+ * @extends SDKInterface
+ */
 export default class ResourceModel extends SDKInterface {
   /**
    * Constructor of the controller of resource.

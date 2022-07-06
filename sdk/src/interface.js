@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+/**
+ * Base class for models. Contains reused {@link request} function.
+ */
 export default class SDKInterface {
   static HTTP_GET = 0;
 
