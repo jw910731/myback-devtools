@@ -15,7 +15,7 @@ export default class SDKInterface {
    * @param {string} sdkVersion the version of the api end point.
    */
   constructor(sdkVersion = 'v1') {
-    this.apiKey = window.MYBACK_API_KEY;
+    this.apiKey = window.MYBACK_API_TOKEN;
     this.endPoint = window.MYBACK_API_ENDPOINT;
     this.sdkVersion = sdkVersion;
   }
