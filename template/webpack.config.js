@@ -1,6 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
 const APIMocker = require("api-mocker");
+const bodyParser = require("body-parser");
 
 module.exports = {
   entry: "./src/index.js",
@@ -23,6 +24,7 @@ module.exports = {
   devServer: {
     setupMiddlewares: (middlewares, devServer) => {
       APIMocker.mock(middlewares);
+      middlewares.unshift(bodyParser.json());
       return middlewares;
     },
     static: path.join(__dirname, 'public'),
