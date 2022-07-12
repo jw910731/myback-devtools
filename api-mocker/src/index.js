@@ -1,5 +1,11 @@
 import Controller from './controller';
 
+/**
+ * The middleware function resolving the route of the incomming request.
+ *
+ * @param {IncomingMessage} req IncomingMessage from the client.
+ * @param {ServerResponse} res ServerResponse for server.
+ */
 async function fakeServer(req, res) {
   const { url, method } = req;
   const path = url.split('?')[0].split('/').filter((s) => s).join('/');
@@ -30,6 +36,11 @@ async function fakeServer(req, res) {
   return null;
 }
 
+/**
+ * Insert fakeServer as the first middleware.
+ *
+ * @param {Array} middlewares
+ */
 function mock(middlewares) {
   middlewares.unshift({
     name: 'api-mock-server',

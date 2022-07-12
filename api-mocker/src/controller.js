@@ -3,6 +3,12 @@ import { URL } from 'url';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
 
+/**
+ * Parse request into resourceID, collectionID, objectID, and URL
+ *
+ * @param {IncomingMessage} req Incoming request.
+ * @returns An object containing all parsed information.
+ */
 function parseReq(req) {
   const url = new URL(req.url, 'http://localhost/');
   const segments = req.url.split('/').filter((s) => s);
@@ -14,10 +20,22 @@ function parseReq(req) {
   };
 }
 
+/**
+ * List all files in the given path, for listing all available databases.
+ *
+ * @param {String} path Relative path to the directory where SQLite database is located.
+ * @returns {String[]}
+ */
 function listDataDir(path = '') {
   return fs.readdirSync(`./data/${path}`);
 }
 
+/**
+ * Open the requested database.
+ *
+ * @param {IncomingMessage} req Incoming request from the middleware.
+ * @returns SQLite database object.
+ */
 async function getDB(req) {
   const { resourceId } = parseReq(req);
   const resource = listDataDir()[resourceId - 1];
@@ -29,6 +47,12 @@ async function getDB(req) {
   return db;
 }
 
+/**
+ * Translate a mongodb like query object into SQL statement.
+ *
+ * @param {Object} elements The query object
+ * @returns {String}
+ */
 function whereParser(elements) {
   if (!elements) return '';
   const ref = {
@@ -52,20 +76,44 @@ function whereParser(elements) {
   return sqlStatement;
 }
 
+/**
+ * Helper function to send object as json format.
+ *
+ * @param {ServerResponse} res
+ * @param obj
+ */
 function response(res, obj) {
   res.send(JSON.stringify(obj));
 }
 
 export default {
+  /**
+   * Get all available resources (databases).
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   getResources: async (req, res) => {
     const directories = listDataDir('/');
     response(res, directories.map((dir, idx) => ({ id: idx + 1, name: dir })));
   },
+  /**
+   * Get collection (table) from database designated in the request.
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   getCollections: async (req, res) => {
     const db = await getDB(req);
     const result = await db.all("SELECT name FROM sqlite_schema WHERE type ='table' AND name NOT LIKE 'sqlite_%'");
     response(res, result.map((row) => ({ id: row.name })));
   },
+  /**
+   * Retrieve data from requested resource and collection in a page manner.
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   getPage: async (req, res) => {
     const { url: reqUrl, collectionId } = parseReq(req);
     const db = await getDB(req);
@@ -75,6 +123,12 @@ export default {
     const result = await db.all(`SELECT * FROM ${collectionId} LIMIT ${limit} OFFSET ${offset}`);
     response(res, result.map((row) => ({ data: row })));
   },
+  /**
+   * Create a new record contained in the request.
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   createObject: async (req, res) => {
     const { collectionId } = parseReq(req);
     const db = await getDB(req);
@@ -84,6 +138,12 @@ export default {
     const result = await db.get(`SELECT * FROM ${collectionId} ${whereParser(req.body)}`);
     response(res, { data: result });
   },
+  /**
+   * Query an object that met the requirement of matcher string.
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   queryObject: async (req, res) => {
     const { url: reqUrl, collectionId } = parseReq(req);
     const db = await getDB(req);
@@ -91,6 +151,12 @@ export default {
     const result = await db.all(`SELECT * FROM ${collectionId} ${whereParser(matcher)}`);
     response(res, result.map((row) => ({ data: row })));
   },
+  /**
+   * Update an record using the information provided in the request.
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   updateObject: async (req, res) => {
     const { url: reqUrl, collectionId } = parseReq(req);
     const db = await getDB(req);
@@ -100,6 +166,12 @@ export default {
     const result = await db.get(`SELECT * FROM ${collectionId} ${whereParser(req.body.data)}`);
     response(res, { data: result });
   },
+  /**
+   * Delete an object using the information provided in the request.
+   *
+   * @param {IncomingRequest} req
+   * @param {ServerResponse} res
+   */
   deleteObject: async (req, res) => {
     const { url: reqUrl, collectionId } = parseReq(req);
     const db = await getDB(req);
