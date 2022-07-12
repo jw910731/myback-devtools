@@ -10,7 +10,7 @@ import { open } from 'sqlite';
  * @returns An object containing all parsed information.
  */
 function parseReq(req) {
-  const url = new URL(req.url, 'http://localhost/');
+  const url = new URL(`api/v1${req.url}`, 'http://localhost/');
   const segments = req.url.split('/').filter((s) => s);
   return {
     url,
