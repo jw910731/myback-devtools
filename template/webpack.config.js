@@ -29,6 +29,7 @@ module.exports = {
     },
     static: path.join(__dirname, 'public'),
   },
+  devtool: "source-map",
   output: {
     path: path.resolve(__dirname, "dist/"),
     publicPath: "/dist/",
