@@ -15,12 +15,12 @@ export default class SDKInterface {
   /**
    * Constructor of interface.
    *
-   * @param {string} sdkVersion the version of the api end point.
+   * @param {string} apiVersion the version of the api end point.
    */
-  constructor(sdkVersion = 'v1') {
+  constructor(apiVersion = 'v1') {
     this.apiKey = window.MYBACK_API_TOKEN;
     this.endPoint = window.MYBACK_API_ENDPOINT;
-    this.sdkVersion = sdkVersion;
+    this.apiVersion = apiVersion;
   }
 
   /**
@@ -33,13 +33,13 @@ export default class SDKInterface {
   request(method, path, requestBody = {}) {
     switch (method) {
       case SDKInterface.HTTP_GET:
-        return axios.get(`${this.endPoint}/${this.sdkVersion}/${path}`);
+        return axios.get(`${this.endPoint}/${this.apiVersion}/${path}`);
       case SDKInterface.HTTP_POST:
-        return axios.post(`${this.endPoint}/${this.sdkVersion}/${path}`, requestBody);
+        return axios.post(`${this.endPoint}/${this.apiVersion}/${path}`, requestBody);
       case SDKInterface.HTTP_PUT:
-        return axios.put(`${this.endPoint}/${this.sdkVersion}/${path}`, requestBody);
+        return axios.put(`${this.endPoint}/${this.apiVersion}/${path}`, requestBody);
       case SDKInterface.HTTP_DELETE:
-        return axios.delete(`${this.endPoint}/${this.sdkVersion}/${path}`);
+        return axios.delete(`${this.endPoint}/${this.apiVersion}/${path}`);
       default:
         throw `${method} is not one of the supported method code.`;
     }
