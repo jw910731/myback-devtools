@@ -1,4 +1,4 @@
-name: Test API Mocker
+name: Test Template
 
 on: push
 
@@ -9,7 +9,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./api-mocker
+        working-directory: ./template
 
     strategy:
       matrix:
@@ -22,7 +22,19 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: api-mocker/package-lock.json
+        cache-dependency-path: template/package-lock.json
+    
+    - name: Build SDK.
+      run: |
+        npm ci
+        npm run build
+      working-directory: ./sdk
+    - name: Build API-Mocker.
+      run: |
+        npm ci
+        npm run build
+      working-directory: ./api-mocker
+
     - name: Install dependencies.
       run: npm ci
     - name: Build NPM package.
