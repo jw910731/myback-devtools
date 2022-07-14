@@ -31,7 +31,7 @@ test('object index', async () => {
       },
     },
   ];
-  axios.get.mockResolvedValue(samplePage);
+  axios.get.mockResolvedValue({ data: samplePage });
 
   const sampleCollection = new CollectionModel(1, 'COLLECTION_ID');
   const res = await sampleCollection.getPage();

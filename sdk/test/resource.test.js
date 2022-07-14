@@ -12,7 +12,7 @@ test('resource get collections', async () => {
       id: 'table2',
     },
   ];
-  axios.get.mockResolvedValue(sampleCollections);
+  axios.get.mockResolvedValue({ data: sampleCollections });
 
   const sampleResource = new ResourceModel(1);
   const res = await sampleResource.getCollections();
