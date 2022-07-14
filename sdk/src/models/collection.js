@@ -33,7 +33,7 @@ export default class CollectionModel extends SDKInterface {
     uri += `/collection/${collectionId}`;
     uri += `/object?limit=${limit}&offset=${pageId}`;
     const res = await this.request(SDKInterface.HTTP_GET, uri);
-    return res.map(({ data: properties }) => new ObjectModel(resourceId, collectionId, properties));
+    return res.data.map(({ data: properties }) => new ObjectModel(resourceId, collectionId, properties));
   }
 
   /**
