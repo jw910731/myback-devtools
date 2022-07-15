@@ -36,6 +36,7 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.17.12",
     "@babel/runtime": "^7.17.9",
+    "api-mocker": "link:",
     "sqlite": "^4.1.1",
     "sqlite3": "^5.0.8"
   }
